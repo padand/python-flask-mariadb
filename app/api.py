@@ -2,6 +2,7 @@
 import flask
 import json
 import mysql.connector as database
+import os
 
 app = flask.Flask(__name__)
 # This will auto reload the flask app when a code change happens:
@@ -10,11 +11,11 @@ app.config["DEBUG"] = True
 # configuration used to connect to MariaDB
 # https://www.digitalocean.com/community/tutorials/how-to-store-and-retrieve-data-in-mariadb-using-python-on-ubuntu-18-04
 config = {
-    'host': 'db',
-    'port': 3306,
-    'user': 'root',
-    'password': 'supersecret',
-    'database': 'demo'
+    'host': os.environ['DB_HOST'],
+    'port': os.environ['DB_PORT'],
+    'user': os.environ['DB_USER'],
+    'password': os.environ['DB_PASS'],
+    'database': os.environ['DB_NAME']
 }
 
 # route to return all people

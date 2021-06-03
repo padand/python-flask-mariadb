@@ -25,4 +25,10 @@ services:
     restart: on-failure
     ports:
       - "127.0.0.1:5000:5000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASS: supersecret
+      DB_NAME: demo
     command: ["bash", "-c", "pip install -r /opt/app/requirements.txt && python3 /opt/app/api.py"]
