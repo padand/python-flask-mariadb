@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  db:
+    image: mariadb:10.6.1
+    container_name: "db"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecret
+  seed:
+    image: imega/mysql-client:10.5.9
+    container_name: "seed"
+    depends_on:
+      - db
+    volumes:
+      - ./seed.sql:/opt/seed.sql:ro
+    restart: on-failure
+    command: ["sh", "-c", "mysql --host=db -u root -psupersecret < /opt/seed.sql"]
