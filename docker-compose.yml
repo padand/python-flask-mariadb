@@ -15,3 +15,14 @@ services:
       - ./seed.sql:/opt/seed.sql:ro
     restart: on-failure
     command: ["sh", "-c", "mysql --host=db -u root -psupersecret < /opt/seed.sql"]
+  app:
+    image: python:3.6
+    container_name: "app"
+    depends_on:
+      - db
+    volumes:
+      - ./app:/opt/app:ro
+    restart: on-failure
+    ports:
+      - "127.0.0.1:5000:5000"
+    command: ["bash", "-c", "pip install -r /opt/app/requirements.txt && python3 /opt/app/api.py"]
